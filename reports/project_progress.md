@@ -6,10 +6,13 @@
 - January 2025 BTS Reporting Carrier On-Time Performance archive and extracted CSV are present under `data/raw/` (ignored by Git).
 - `.venv` is present, ignored by Git, and uses Python 3.11.1 with pandas 3.0.6.
 - Added `scripts/initial_data_check.py` as a reusable, read-only summary check.
-- Verified 539,747 records, January 1–31 dates, 14 reporting airlines, 329 origin/destination airports, 2,530 missing or blank tail numbers, 16,312 cancellations, 1,166 diversions, and 17,478 missing arrival delays.
+- Added `scripts/exploratory_data_check.py` and completed a first exploratory summary of delay values, airports, carriers, repeated tail/date groups, and candidate same-aircraft connections.
+- Added a preliminary literature update with published examples of flight-delay GNNs, same-aircraft sequence features, and six- and 24-hour prediction horizons. This is not a systematic review and does not establish a new contribution.
+- Verified 539,747 records from January 1 to 31, 14 reporting airlines, 329 origin/destination airports, 2,530 missing or blank tail numbers, 16,312 cancellations, 1,166 diversions, and 17,478 missing arrival delays.
 - Verified that the missing arrival-delay records exactly equal cancelled-or-diverted records: 16,312 cancellation only, 1,166 diversion only, none in both or neither.
+- Found 5,612 distinct reported tail numbers. Among operated records with a tail number, 127,981 of 142,174 tail/date groups contained multiple records. A first screen produced 449,447 same-tail, same-date, endpoint-compatible candidate pairs with a 0 to 720 minute scheduled clock gap; 62,285 previous-flight records had multiple possible successors. This supports further screening, but does not validate an operational rotation.
 - Updated the data-check report and README to reflect verified results. No model has been trained.
-- The owner is in the third semester. The next semester is expected to run approximately January 20–May 15, 2027. The target is to complete data exploration, literature review, and model development before then; focus the next semester on deployment/web interface, testing, documentation, and the final presentation; and complete the project around March/April 2027. This is a proposed schedule for adviser discussion.
+- The owner is in the third semester. The next semester is expected to run approximately January 20 to May 15, 2027. The target is to complete data exploration, literature review, and model development before then; focus the next semester on deployment/web interface, testing, documentation, and the final presentation; and complete the project around March/April 2027. This is a proposed schedule for adviser discussion.
 
 ## Decisions and open questions
 
@@ -23,8 +26,8 @@
 
 ## Next steps
 
-1. Complete exploratory analysis, including whether actual aircraft rotations can be reconstructed and which records are usable.
-2. Review current literature and establish a defensible contribution before narrowing the research focus.
+1. Improve the aircraft-link screen by accounting for airport-local arrival dates and checking candidate links against actual timings; resolve or exclude ambiguous assignments.
+2. Continue the literature review by comparing prediction unit, graph construction, feature availability, horizons, validation, and metrics before establishing a defensible contribution.
 3. Agree on and review the next analysis/modeling step before starting model training.
 4. Aim to develop and chronologically evaluate the XGBoost baseline, network-feature comparison, and GNN by January 19, 2027.
 5. From about January 20 to May 15, 2027, focus on the web interface and deployment, testing, documentation, and final presentation; target completion around March/April 2027.

@@ -19,7 +19,7 @@ I will refine these questions as I review more papers and work with the data.
 
 ## Current progress
 
-The January 2025 BTS sample is downloaded and locally available. A reusable check confirms the initial record counts and shows that missing arrival-delay values correspond exactly to cancelled or diverted records. The check and detailed findings are documented in [reports/initial_data_check.md](reports/initial_data_check.md). No models have been trained.
+The January 2025 BTS sample is downloaded and locally available. A reusable check confirms the initial record counts and shows that missing arrival-delay values correspond exactly to cancelled or diverted records. A first screen found many possible same-aircraft connections, but local dates and multiple possible successors mean these are not verified rotations. A short literature update also confirms that GNN flight-delay studies and aircraft-linked approaches already exist. See the [data check](reports/initial_data_check.md), [exploratory findings](reports/exploratory_data_check.md), and [literature update](reports/literature_update.md). No models have been trained.
 
 I am in my third semester. The current target is to do the data exploration, literature update, and model development before the next semester, which is expected to run from about January 20 to May 15, 2027. That semester is expected to focus on the web interface and deployment, testing, documentation, and the final presentation. I expect to complete the project around March or April 2027, near the presentation period; this schedule still needs discussion with my adviser.
 
@@ -33,7 +33,7 @@ Large datasets will stay outside GitHub. I will document how to download and pre
 
 ## Next steps
 
-- By November 2026, explore the data and check whether aircraft rotations can be reconstructed reliably; update the literature review.
+- By November 2026, continue the exploratory analysis, test whether candidate consecutive aircraft links can be reconstructed reliably, and extend the literature review.
 - By January 19, 2027, aim to develop and evaluate the XGBoost baseline, network-feature comparison, and GNN, using chronological validation and only information available at each prediction time. Model training has not started and will follow review of the next step.
 - From about January 20 to May 15, 2027, focus on the web interface and deployment, testing, documentation, and the final presentation. Target project completion is March or April 2027.
 - Investigate live data and passenger connection-risk feasibility before adding them to the demo.
