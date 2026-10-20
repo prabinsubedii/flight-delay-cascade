@@ -1,47 +1,19 @@
-# Predicting Cascading Flight Delays
+# Flight Delay Cascade
 
 Master's project by Prabin Subedi.
 
-## About this project
+I am looking at whether delays on one flight can affect later flights using the same aircraft, and whether that information helps predict delays.
 
-A delay on one flight can affect other flights later in the day, especially when the same plane is used for multiple trips. I want to study how these delays spread and whether using connections between flights helps make better predictions.
+## Progress
 
-I will first build an XGBoost baseline, then compare it with a Graph Neural Network. I also want to build a web demo where someone can check delay predictions and possible risks to their connecting flight.
+I have cleaned the January 2025 BTS sample, explored it, and run a first XGBoost comparison with and without origin weather. The simple median prediction did better than either model, so this is still a prototype. The aircraft-link checks are also preliminary. See the [exploratory notebook](notebooks/january_2025_first_look.ipynb) and [baseline results](reports/january_baseline.md).
 
-## Research questions
+## Next
 
-- Can a GNN predict downstream flight delays better than a traditional model, including one that uses information from connected flights?
-- How far in advance can we make useful predictions? How does performance change at different prediction times?
-- Which information helps the most: aircraft rotations, weather, airport congestion, or historical route performance?
-- Does the model work well across different airports and seasons, including days with major disruptions?
+Next I plan to review the baseline result, improve the data checks, and compare network and graph models by December 31, 2026. I aim to finish the main model work in January 2027. The target and prediction timing used here are a first choice to discuss with my professor.
 
-I will refine these questions as I review more papers and work with the data.
-
-## Current progress
-
-The January 2025 BTS sample is downloaded and locally available. A reusable check confirms the initial record counts and shows that missing arrival-delay values correspond exactly to cancelled or diverted records. A first screen found many possible same-aircraft connections, but local dates and multiple possible successors mean these are not verified rotations. A short literature update also confirms that GNN flight-delay studies and aircraft-linked approaches already exist. See the [data check](reports/initial_data_check.md), [exploratory findings](reports/exploratory_data_check.md), and [literature update](reports/literature_update.md). No models have been trained.
-
-I am in my third semester. The current target is to do the data exploration, literature update, and model development before the next semester, which is expected to run from about January 20 to May 15, 2027. That semester is expected to focus on the web interface and deployment, testing, documentation, and the final presentation. I expect to complete the project around March or April 2027, near the presentation period; this schedule still needs discussion with my adviser.
+After the main work is done in January 2027, I plan to use the remaining time for web design, deployment, testing, documentation, and final presentation materials. I expect to finish around March or April.
 
 ## Data
 
-I am starting with the Bureau of Transportation Statistics Reporting Carrier On-Time Performance dataset.
-
-I also plan to look into weather and airport congestion data, depending on access and how useful they are for the predictions.
-
-Large datasets will stay outside GitHub. I will document how to download and prepare them so the work can be reproduced.
-
-## Next steps
-
-- By November 2026, continue the exploratory analysis, test whether candidate consecutive aircraft links can be reconstructed reliably, and extend the literature review.
-- By January 19, 2027, aim to develop and evaluate the XGBoost baseline, network-feature comparison, and GNN, using chronological validation and only information available at each prediction time. Model training has not started and will follow review of the next step.
-- From about January 20 to May 15, 2027, focus on the web interface and deployment, testing, documentation, and the final presentation. Target project completion is March or April 2027.
-- Investigate live data and passenger connection-risk feasibility before adding them to the demo.
-
-## Things to work out
-
-I still need to update the literature review and narrow down the specific contribution of this project. GNN-based flight-delay prediction already exists, so novelty claims in the original proposal need verification and revision.
-
-The historical BTS aircraft assignment does not prove that the assignment was known at an earlier prediction time. I also need to check which information would be available at each prediction horizon. Live predictions and passenger connection risk need further investigation. January 2025 alone cannot support claims about seasonal generalization.
-
-See [reports/project_progress.md](reports/project_progress.md) for verified progress, open decisions, and next steps. Re-run the initial check with `.\.venv\Scripts\python.exe scripts/initial_data_check.py` from the repository root.
+The raw BTS and weather files, processed data, and model files stay on my computer and are not committed to Git.

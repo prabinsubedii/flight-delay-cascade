@@ -1,7 +1,7 @@
-"""Summarize the January 2025 BTS sample for exploratory analysis.
+"""Explore January 2025 BTS flights and screen possible aircraft connections.
 
-This script reports descriptive statistics and repeated aircraft identifiers.
-It does not infer aircraft rotations or train a model.
+This script reports descriptive statistics and possible same-aircraft links.
+Those links are not verified aircraft rotations. The script does not train a model.
 """
 
 from pathlib import Path

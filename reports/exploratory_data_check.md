@@ -1,8 +1,10 @@
 # Exploratory check of the January 2025 BTS sample
 
-## What I ran
+## What I tried
 
-I added a small script that reads selected columns from the local BTS CSV and prints descriptive summaries. It does not change the raw file, infer a final flight network, or train a model.
+I started by asking a few basic questions about the January file: where are values missing, how are arrival delays distributed, do delays look different by day, airline, or airport, and do repeated tail numbers look promising for checking aircraft links? The notebook records those checks and leaves the outputs visible for discussion: [January 2025 first look](../notebooks/january_2025_first_look.ipynb).
+
+I also kept a small script for rerunning the summary numbers and candidate-link screen. It does not change the raw file, confirm a final flight network, or train a model.
 
 Run it from the repository root with:
 
@@ -10,7 +12,7 @@ Run it from the repository root with:
 .\.venv\Scripts\python.exe scripts/exploratory_data_check.py
 ```
 
-## Findings
+## Findings so far
 
 - The sample has 539,747 records from January 1 through January 31, 2025. It covers 14 reporting airlines and 329 origin and destination airports.
 - Arrival delay is available for 522,269 records. Among those records, the median arrival delay is -8 minutes, the 90th percentile is 37 minutes, and 18.8% have an arrival delay of at least 15 minutes. Cancelled and diverted records are not included in these delay summaries because their arrival delays are missing.
@@ -25,4 +27,4 @@ The dataset has useful ingredients for an aircraft-link feasibility study: tail 
 
 The connection screen is only a candidate-generation step. It does not identify verified consecutive flights or confirm that those flights used the same aircraft in operational sequence. BTS reports schedule times as local clock times, and its reporting guidance says time-zone differences must be handled when calculating elapsed time ([BTS Technical Directive 39](https://www.bts.gov/explore-topics-and-geography/modes/aviation/number-39-technical-directive-reporting-time)). The screen compares arrival and departure clocks at the shared airport, but assumes the two records' `FlightDate` is also the same local connection date. Overnight arrivals can break that assumption, and same-day pairs may still have another leg between them. The 62,285 records with multiple possible successors also need resolution. A follow-up should account for local arrival dates, test against actual timings, and inspect ambiguous or missing assignments. Historical tail numbers also do not prove the assignment was available at a prediction time.
 
-The result is a partial feasibility finding, not a validated rotation network. January is one month and cannot support seasonal generalization. No model has been trained.
+The result is a partial feasibility finding, not a validated rotation network. January is one month and cannot support seasonal generalization. A separate first single-flight baseline has since been trained; it does not use these candidate links.

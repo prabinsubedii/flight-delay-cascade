@@ -33,4 +33,4 @@ All records with missing `ArrDelay` are in the union of cancelled and diverted r
 
 ## Interpretation and limits
 
-Most records have a reported tail number, which makes aircraft-based linking worth investigating. A tail number on a completed historical record does not show that the assignment was available at an earlier prediction time. This check does not establish that consecutive aircraft rotations can be reconstructed reliably, and the single month is not enough to support seasonal or cross-period claims. No model training or full exploratory analysis has been done.
+Most records have a reported tail number, which makes aircraft-based linking worth investigating. A tail number on a completed historical record does not show that the assignment was available at an earlier prediction time. This check does not establish that consecutive aircraft rotations can be reconstructed reliably, and the single month is not enough to support seasonal or cross-period claims. This initial data check predates the exploratory notebook and first baseline documented elsewhere in the repository.
