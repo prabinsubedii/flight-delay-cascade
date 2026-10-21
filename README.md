@@ -26,6 +26,7 @@ These flights were in the final test week. Flight numbers identify the records; 
 | Jan 28, AA 2420 | IAH–DFW | 4 min | 24 min | 3,282 min |
 
 These examples show how the model handled individual flights; they are not a substitute for the full-week scores. The very long delays were difficult to predict.
+Negative actual delays mean the flight arrived early.
 
 ## What I did
 
@@ -33,7 +34,7 @@ These examples show how the model handled individual flights; they are not a sub
 - Added archived departure-airport weather observations from [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/).
 - Compared two XGBoost models with a simple median benchmark.
 
-Next I’m checking whether aircraft rotations can be identified reliably, then I’ll compare network and graph models. The main model work is planned for January 2027, with the web interface, testing, and documentation afterward.
+Next I’m checking whether aircraft rotations can be identified reliably, then I’ll compare network and graph models by the end of December. I plan to finish the main model work in January 2027, with the web interface, testing, and documentation afterward.
 
 ## Run it
 
