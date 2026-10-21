@@ -1,19 +1,49 @@
 # Flight Delay Cascade
 
-Master's project by Prabin Subedi.
+I started with January 2025 U.S. flight records and airport weather. I cleaned the data, looked for basic patterns, and trained two first-pass models to estimate arrival delay.
 
-I am looking at whether delays on one flight can affect later flights using the same aircraft, and whether that information helps predict delays.
+## First result
 
-## Progress
+I trained on January 1–18, used January 19–24 to set the model, and checked it on January 25–31. The prediction is made 30 minutes before scheduled departure.
 
-I have cleaned the January 2025 BTS sample, explored it, and run a first XGBoost comparison with and without origin weather. The simple median prediction did better than either model, so this is still a prototype. The aircraft-link checks are also preliminary. See the [exploratory notebook](notebooks/january_2025_first_look.ipynb) and [baseline results](reports/january_baseline.md).
+| Model | Average error |
+| --- | ---: |
+| Predict the training median | 18.00 minutes |
+| XGBoost with flight details | 24.46 minutes |
+| XGBoost with flight details and origin weather | 24.25 minutes |
 
-## Next
+The simple median was better. Adding weather barely changed the model result, so there is more work to do.
 
-Next I plan to review the baseline result, improve the data checks, and compare network and graph models by December 31, 2026. I aim to finish the main model work in January 2027. The target and prediction timing used here are a first choice to discuss with my professor.
+## A few flights from the test week
 
-After the main work is done in January 2027, I plan to use the remaining time for web design, deployment, testing, documentation, and final presentation materials. I expect to finish around March or April.
+These flights were in the final test week. Flight numbers identify the records; the model did not use them as inputs. Predictions are in minutes of arrival delay.
 
-## Data
+| Date, flight | Route | Flight details | With weather | Actual |
+| --- | --- | ---: | ---: | ---: |
+| Jan 28, WN 2758 | OAK–LAS | 3 min | -3 min | -7 min |
+| Jan 25, AA 642 | CLT–EYW | 9 min | 7 min | 55 min |
+| Jan 31, OO 6398 | ACT–DFW | 12 min | 10 min | 75 min |
+| Jan 28, AA 2420 | IAH–DFW | 4 min | 24 min | 3,282 min |
 
-The raw BTS and weather files, processed data, and model files stay on my computer and are not committed to Git.
+These examples show how the model handled individual flights; they are not a substitute for the full-week scores. The very long delays were difficult to predict.
+
+## What I did
+
+- Cleaned the January BTS file and checked delay patterns and possible aircraft links.
+- Added archived departure-airport weather observations from [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/).
+- Compared two XGBoost models with a simple median benchmark.
+
+Next I’m checking whether aircraft rotations can be identified reliably, then I’ll compare network and graph models. The main model work is planned for January 2027, with the web interface, testing, and documentation afterward.
+
+## Run it
+
+Run these from the project folder:
+
+```powershell
+python -m pip install -r requirements.txt
+python scripts/prepare_january_sample.py
+python scripts/download_january_weather.py
+python scripts/train_january_baselines.py
+```
+
+The notebook with my first data checks is in `notebooks/`.

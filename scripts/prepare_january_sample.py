@@ -22,6 +22,7 @@ OUTPUT = ROOT / "data" / "processed" / "january_2025_clean.csv"
 COLUMNS = [
     "FlightDate",
     "Reporting_Airline",
+    "Flight_Number_Reporting_Airline",
     "Tail_Number",
     "Origin",
     "Dest",
@@ -45,7 +46,12 @@ def clean_code(values: pd.Series) -> pd.Series:
 
 
 def main() -> None:
-    flights = pd.read_csv(SOURCE, usecols=COLUMNS, low_memory=False)
+    flights = pd.read_csv(
+        SOURCE,
+        usecols=COLUMNS,
+        dtype={"Flight_Number_Reporting_Airline": "string"},
+        low_memory=False,
+    )
     source_rows = len(flights)
 
     flights["FlightDate"] = pd.to_datetime(flights["FlightDate"], errors="coerce")

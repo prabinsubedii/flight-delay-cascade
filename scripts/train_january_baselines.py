@@ -8,7 +8,6 @@ initial one-month comparison, not the project's final validated model.
 from pathlib import Path
 import json
 import os
-from zoneinfo import ZoneInfo
 
 import airportsdata
 import numpy as np
@@ -107,6 +106,7 @@ def attach_origin_weather(flights: pd.DataFrame) -> pd.DataFrame:
 
     flights["Origin"] = flights["Origin"].astype("string").str.strip().str.upper()
     flights = flights.sort_values("WeatherCutoffUTC")
+    # Only use a report that existed before the prediction cutoff.
     merged = pd.merge_asof(
         flights,
         weather[weather_columns].sort_values("WeatherObservedUTC"),
@@ -181,11 +181,6 @@ def train_model(
     )
     predictions = model.predict(test_matrix, iteration_range=(0, model.best_iteration + 1))
     model.save_model(OUTPUT_DIR / f"{name}.json")
-    scores = model.get_score(importance_type="gain")
-    importance = pd.DataFrame(
-        {"feature": train_x.columns, "gain": [scores.get(column, 0.0) for column in train_x.columns]}
-    ).sort_values("gain", ascending=False)
-    importance.to_csv(OUTPUT_DIR / f"{name}_feature_importance.csv", index=False)
     return model, predictions
 
 
@@ -221,7 +216,10 @@ def main() -> None:
             np.full(len(test), target_train.median()),
         )
     ]
-    predictions = test[["FlightDate", "Reporting_Airline", "Origin", "Dest", "ArrDelay"]].copy()
+    predictions = test[[
+        "FlightDate", "Reporting_Airline", "Flight_Number_Reporting_Airline",
+        "Origin", "Dest", "ArrDelay",
+    ]].copy()
     predictions = predictions.rename(columns={"ArrDelay": "actual_arrival_delay_minutes"})
 
     best_iterations = {}

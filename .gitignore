@@ -222,3 +222,4 @@ __marimo__/
 # Local datasets
 data/raw/
 data/processed/
+.local_notes/
